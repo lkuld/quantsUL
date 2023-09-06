@@ -46,7 +46,7 @@ What is the square root of 289? Click on 'Solution' to see the correct code.
 sqrt(289)
 ```
 
-
+Try other functions such as log(x) for the natural logarithm of x and sum(x1, x2, x3, ...) for the sum of several numbers separated by comma. If you are not sure what a function does, you can call the help page for the function by preceding the function's name with a question mark, for instance '?sum'.
 
 ## Objects, vectors, ...
 
@@ -55,7 +55,7 @@ sqrt(289)
 
 For more complicated calculations, we usually want to store or retrieve data. In R, we can store data in various formats, we begin by saving the results from some calculations.
 
-Let's start by saving the number $2$ as an object with the name $x1$.^[In r,  we create the object 'x1' at the same time that we assign a value to it. In some programming languages, the object needs to be created first, before assign a value.] We can use an arrow (<-) or equal sign (=) to assign the value, that is `x1 <- 2` or `x1 = 2`.
+Let's start by saving the number $2$ as an object with the name $x1$.^[In r,  we create the object 'x1' at the same time that we assign a value to it. In some programming languages, the object needs to be created first, before we can assign a value.] We can use an arrow (<-) or equal sign (=) to assign the value, that is `x1 <- 2` or `x1 = 2`.
 
 
 In the box below, the object x1 is created with the value 2. Add $3$ to x1, save the result as $y$. 
