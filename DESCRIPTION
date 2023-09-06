@@ -1,13 +1,13 @@
 Package: quantsUL
-Title: What the Package Does (One Line, Title Case)
+Title: Tutorials for UL
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Lukas",
+           family = "Kuld",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
+           email = "lukas.kuld@ul.ie",
            comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+Description: Tutorials for quantitative methods and data analysis at the University of Limerick
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
