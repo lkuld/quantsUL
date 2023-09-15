@@ -10,189 +10,90 @@ knitr::opts_chunk$set(echo = FALSE)
 ```
 
 
-##  Organise data
+#  Organise data
 
-*In the last tutorial, we encountered numeric and character vectors: ordered (order is important) collection of objects. In this tutorial we will look at grouped vectors, for instance a table.*
+## Vectors
 
-Write random mathematical expressions (e.g. `2+2`), then click on 'Run Code'. Click on 'Start Over' to start afresh. What happens when you write two functions in the same line?
+*In the last tutorial, we encountered types of data: numbers (1,6, ...) and character strings ('blue', 'five', '5', 'fdbv 47.. df', ...). We organised them into vectors, that is a collection of elements with an order such that we can access for instance the third element of the vector.*
 
-```{r randomCalc, exercise=TRUE}
+Below are two vectors, a numeric and  a character vector (the latter indicated by `'` or `"`). If you are not sure what type an R object is, you can type `class()`. In the box below, determine the type of each vector.
+
+```{r vec-1, exercise=TRUE}
+
+numeric_vector <- c(2,54,5,7)
+character_vector <- c('two', 'flower','tree','2')
+
+```
+
+
+```{r vec-1-solution}
+numeric_vector <- c(2,54,5,7)
+character_vector <- c('two', 'flower','tree','2')
+
+class(numeric_vector)
+class(character_vector)
+```
+
+Next, output the third element of each vector using the `vector[3]` notation.
+
+```{r vec-1b, exercise=TRUE}
+
+numeric_vector <- c(2,54,5,7)
+character_vector <- c('two', 'flower','tree','2')
 
 ```
 
 
+```{r vec-1b-solution}
 
-
-
-
-
-
-
-
-How do you calculate $5 \times (3+4)$ and $5^{(3+4)}$? Click on 'Hint' if you are stuck.
-
-```{r hoch, exercise=TRUE}
-
+numeric_vector[3]
+character_vector[3]
 ```
 
-```{r hoch-hint}
-2*(2+5) # use brackets to order your calculation
-2*2+5 # The number (or hash) sign indicats the beginning of a comment, R won't evaluate the rest of the line 
-2^3 # ^ is used for powers 
-2^(2+2)
-5^3
+
+You can combine two vectors or add additional elements using again the function `c()`. Run the following code.
+
+```{r vec-2, exercise=TRUE}
+
+numeric_vector <- c(2,54,5,7)
+character_vector <- c('two', 'flower','tree','2')
+
+numeric_vector_2 <- c(numeric_vector, 3)
+numeric_vector_2
+
+c(numeric_vector, character_vector)
 ```
 
-Basic mathematical operations such as adding and multiplying numbers have an intuitive implementation as shown above, for instance 2+2. The standard way to write a function is, however, 'function(a,b,...)', that is a word followed by arguments inside a bracket and separated by commas. For instance, 'sqrt(x)' calculates the square root of thr number x.
+In the last line, we combined our character and numeric vector. R then automatically converted all numeric elements to character strings. The reason is that vectors can only contain one type of data. While numbers can be converted to character, the reverse is not always possible. 
 
-What is the square root of 289? Click on 'Solution' to see the correct code. 
+(This holds true outside of R, for instance 5 can be the name of a room. Importantly, room 5 plus room 3 does not equal room 8. While this seems clear, it is still an often made mistake in statistics: Not everything that has a number should be treated as a number.)
 
-```{r wurzel, exercise=TRUE}
 
+
+## Data.frames
+
+Typically, we need more than one vector to organise our data. For instance, we might want to study the height and age of a group of children. Our first vector contains the children's height measured in cm, that is the first element is the height of kid 1, 2, and so on. A second vector contains the age of child 1, 2, 3, etc. 
+
+A straightforward way to organise these observations is to create at table in which the columns correspond to the different categories (variables), that is height or age. The rows correspond to the different observation units, in this case children. In addition, we probably want to add a third column with the name or identifier for each kid. The standard data structure for such a table in R is called `data.frame`. The box below defines and outputs a data frame.
+
+
+```{r data-frame, exercise=TRUE}
+
+name <- c('Peter', 'Helen', 'Ana', 'Sean', 'Chris', 'Mary')
+age <- c(8,7,9,7,7,8)
+height <- c(125,133,151,145,140,134)
+
+age_height_df <- data.frame(name, age, height)
+
+age_height_df
 ```
 
-```{r wurzel-solution}
-sqrt(289)
-```
+This brings us to a first look at the data we will use for our term project. I have added a subset of the Irish property data to this tutorial as a `data.frame`. The `data.frame` is called `irish_property_df`. Have a look at the data in the next box.  
 
-Try other functions such as log(x) for the natural logarithm of x and sum(x1, x2, x3, ...) for the sum of several numbers separated by comma. If you are not sure what a function does, you can call the help page for the function by preceding the function's name with a question mark, for instance '?sum'.
+```{r prop-data, exercise=TRUE}
+
+irish_property_df
+```
 
 ## Objects, vectors, ...
-
-
-### Saving results
-
-For more complicated calculations, we usually want to store or retrieve data. In R, we can store data in various formats, we begin by saving the results from some calculations.
-
-Let's start by saving the number $2$ as an object with the name $x1$.^[In r,  we create the object 'x1' at the same time that we assign a value to it. In some programming languages, the object needs to be created first, before we can assign a value.] We can use an arrow (<-) or equal sign (=) to assign the value, that is `x1 <- 2` or `x1 = 2`.
-
-
-In the box below, the object x1 is created with the value 2. Add $3$ to x1, save the result as $y$. 
-
-
-```{r speicher, exercise=TRUE}
- x1 <- 2
-```
-
-```{r speicher-solution}
-  x1 <- 2
-  y <- x1 + 3
-```
-
-So far we have defined two objects: x1 and y, but we have not seen any output as x1 and y are defined by the code but not printed. To print or output the content of an object, you can write the object's name (i.e. 'y' or 'x1') in a new line. Or, you can be more specific by writing 'print(x1)' and 'print(y)'.
-
-
-
-```{r Object, exercise=TRUE, exercise.preval=TRUE}
-x1 <- 2
-
-y <- x1 + 3
-```
-
-```{r Object-solution}
-x1 <- 2
-y <- x1 + 3
-
-x1
-y
-
-print(x1)
-print(y)
-```
-
-### Vectors
-
-In R, a vector is an ordered sequence of numbers or other data types. We will see how these properties are useful when we operate with more than just a few numbers.
-
-We can create a vector by combining a few numbers using the function 'c'. For instance 'x <- c(2,5,3,2)' creates a vector named x that contains the numbers 2, 5, 3, 2 in this order.
-
-```{r vector, exercise=TRUE, exercise.preval=TRUE}
-x <- c(2,5,3,2)
-
-x
-```
-
-
-Since the vector is ordered, we can select specific elements from the vector by referring to the position. This is done using square brackets after the vector's name, for instance 'x[2]'. Change the number around, what happens if you use a number larger than the length of the vector?
-
-```{r vector-pos, exercise=TRUE, exercise.preval=TRUE}
-x <- c(2,5,3,2)
-
-x[2]
-```
-
-Besides numbers, vectors can also contain different types of data, for instance words. Words ('character' data) are written using single or double quotation marks. The following box contains a vector with a few names, can you output just Mary?
-
-```{r vector-char, exercise=TRUE, exercise.preval=TRUE}
-x <- c('John', "Mary", "Helen")
-
-x
-```
-
-
-### Functions
-
-Functions are a different kind of object. A function takes an input and links it to a specific output. For instance, the following function $f$ calculates a numerical output depending on the input $x$: $f(x)=4x+3$. 
-
-To write longer code in multiple lines that we want to be executed together, we use curly brackets: `{}`.
-
-```{r FunktionBsp, exercise=TRUE, exercise.preval=TRUE}
-
-
-linearFunction <- function(x)  4*x + 3
-
-linearFunction2 <- function(x){
-  4*x + 3
-}
-
-linearFunction(2)
-linearFunction2(2)
-linearFunction(20)
-
-result <- linearFunction(2)
-result
-```
-
-
-Your turn: Write a function that takes an input named $x_1$ and gives as as output $x_1+3$, that is our function is defined as $f(x_1)=x_1+3$. The structure and name (plusThree) are already given in the box below.
-
-Complete the function and calculate $f(5)$.
-
-```{r Funktion, exercise=TRUE, exercise.preval=TRUE}
-plusThree <- function(x1){
-  
-}
-
-```
-
-```{r Funktion-solution}
-plusThree <- function(x1){
-  x1+3
-}
-
-plusThree(5)
-```
-
-Let's have a look at the components of a function. Run the code after each of these steps.
-
-1. Change the variable name 'x' to 'UL' in input and calculation
-2. Change the function's name
-3. Change the calculation inside the curly brackets
-4. Remove the curly brackets
-
-```{r Funktion2, exercise=TRUE, exercise.preval=TRUE}
-plusThree <- function(x){
-  x+3
-}
-
-plusThree(2)
-plusThree(99)
-```
-
-```{r Funktion2-solution}
-plus <- function(x)  UL*3 - 4
-
-plus(2)
-plus(99)
-```
 

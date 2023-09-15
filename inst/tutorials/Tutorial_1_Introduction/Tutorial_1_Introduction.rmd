@@ -28,7 +28,7 @@ How do you calculate $5 \times (3+4)$ and $5^{(3+4)}$? Click on 'Hint' if you ar
 
 ```{r hoch-hint}
 2*(2+5) # use brackets to order your calculation
-2*2+5 # The number (or hash) sign indicats the beginning of a comment, R won't evaluate the rest of the line 
+2*2+5 # The number or hash sign (#) indicates the beginning of a comment. R won't evaluate the rest of the line 
 2^3 # ^ is used for powers 
 2^(2+2)
 5^3
@@ -127,7 +127,7 @@ Functions are a different kind of object. A function takes an input and links it
 
 To write longer code in multiple lines that we want to be executed together, we use curly brackets: `{}`.
 
-```{r FunktionBsp, exercise=TRUE, exercise.preval=TRUE}
+```{r FunktionBsp, exercise=TRUE}
 
 
 linearFunction <- function(x)  4*x + 3
