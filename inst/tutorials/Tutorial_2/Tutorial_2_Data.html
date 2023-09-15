@@ -368,7 +368,8 @@ data-lines="0">
 <div class="tutorial-exercise-support" data-label="smallPrices-solution"
 data-completion="1" data-diagnostics="1" data-startover="1"
 data-lines="0">
-<pre class="text"><code>mean(limerick_property_df$year[limerick_property_df$price &lt; 200000])</code></pre>
+<pre class="text"><code>condition &lt;- limerick_property_df$price &lt; 200000
+mean(limerick_property_df$year[condition])</code></pre>
 </div>
 <p>We can combine multiple Boolean expressions using the operator
 <code>&amp;</code> for ‘and’, for instance
@@ -388,7 +389,10 @@ data-lines="0">
 <div class="tutorial-exercise-support"
 data-label="eitherPrices-solution" data-completion="1"
 data-diagnostics="1" data-startover="1" data-lines="0">
-<pre class="text"><code>mean(limerick_property_df$price[limerick_property_df$price &lt; 150000 | limerick_property_df$price &gt; 300000])</code></pre>
+<pre class="text"><code>condition1 &lt;- limerick_property_df$price &lt; 150000 
+condition2 &lt;- limerick_property_df$price &gt; 300000
+condition_overall &lt;- condition1 | condition2
+mean(limerick_property_df$price[condition_overall])</code></pre>
 </div>
 <p>
 <script type="application/shiny-prerendered" data-context="server-start">
@@ -920,16 +924,16 @@ learnr:::store_exercise_cache(structure(list(label = "smallPrices", global_setup
     list(label = "smallPrices", code = "mean(limerick_property_df$year[limerick_property_df$price ???])\n", 
         opts = list(label = "\"smallPrices\"", exercise = "TRUE"), 
         engine = "r")), code_check = NULL, error_check = NULL, 
-    check = NULL, solution = structure(c("", "mean(limerick_property_df$year[limerick_property_df$price < 200000])"
-    ), chunk_opts = list(label = "smallPrices-solution")), tests = NULL, 
-    options = list(eval = FALSE, echo = TRUE, results = "markup", 
-        tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
-        comment = NA, highlight = FALSE, size = "normalsize", 
-        background = "#F7F7F7", strip.white = TRUE, cache = 0, 
-        cache.path = "Tutorial_2_Data_cache/html/", cache.vars = NULL, 
-        cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
-        cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
-        fig.align = "default", fig.path = "Tutorial_2_Data_files/figure-html/", 
+    check = NULL, solution = structure(c("condition <- limerick_property_df$price < 200000", 
+    "mean(limerick_property_df$year[condition])"), chunk_opts = list(
+        label = "smallPrices-solution")), tests = NULL, options = list(
+        eval = FALSE, echo = TRUE, results = "markup", tidy = FALSE, 
+        tidy.opts = NULL, collapse = FALSE, prompt = FALSE, comment = NA, 
+        highlight = FALSE, size = "normalsize", background = "#F7F7F7", 
+        strip.white = TRUE, cache = 0, cache.path = "Tutorial_2_Data_cache/html/", 
+        cache.vars = NULL, cache.lazy = TRUE, dependson = NULL, 
+        autodep = FALSE, cache.rebuild = FALSE, fig.keep = "high", 
+        fig.show = "asis", fig.align = "default", fig.path = "Tutorial_2_Data_files/figure-html/", 
         dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
         fig.width = 6.5, fig.height = 4, fig.env = "figure", 
         fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
@@ -961,16 +965,17 @@ learnr:::store_exercise_cache(structure(list(label = "eitherPrices", global_setu
     list(label = "eitherPrices", code = "mean(limerick_property_df$price[???])\n", 
         opts = list(label = "\"eitherPrices\"", exercise = "TRUE"), 
         engine = "r")), code_check = NULL, error_check = NULL, 
-    check = NULL, solution = structure(c("", "mean(limerick_property_df$price[limerick_property_df$price < 150000 | limerick_property_df$price > 300000])"
-    ), chunk_opts = list(label = "eitherPrices-solution")), tests = NULL, 
-    options = list(eval = FALSE, echo = TRUE, results = "markup", 
-        tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
-        comment = NA, highlight = FALSE, size = "normalsize", 
-        background = "#F7F7F7", strip.white = TRUE, cache = 0, 
-        cache.path = "Tutorial_2_Data_cache/html/", cache.vars = NULL, 
-        cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
-        cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
-        fig.align = "default", fig.path = "Tutorial_2_Data_files/figure-html/", 
+    check = NULL, solution = structure(c("condition1 <- limerick_property_df$price < 150000 ", 
+    "condition2 <- limerick_property_df$price > 300000", "condition_overall <- condition1 | condition2", 
+    "mean(limerick_property_df$price[condition_overall])"), chunk_opts = list(
+        label = "eitherPrices-solution")), tests = NULL, options = list(
+        eval = FALSE, echo = TRUE, results = "markup", tidy = FALSE, 
+        tidy.opts = NULL, collapse = FALSE, prompt = FALSE, comment = NA, 
+        highlight = FALSE, size = "normalsize", background = "#F7F7F7", 
+        strip.white = TRUE, cache = 0, cache.path = "Tutorial_2_Data_cache/html/", 
+        cache.vars = NULL, cache.lazy = TRUE, dependson = NULL, 
+        autodep = FALSE, cache.rebuild = FALSE, fig.keep = "high", 
+        fig.show = "asis", fig.align = "default", fig.path = "Tutorial_2_Data_files/figure-html/", 
         dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
         fig.width = 6.5, fig.height = 4, fig.env = "figure", 
         fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 

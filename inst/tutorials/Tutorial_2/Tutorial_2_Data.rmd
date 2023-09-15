@@ -204,8 +204,8 @@ mean(limerick_property_df$year[limerick_property_df$price ???])
 ```
 
 ```{r smallPrices-solution}
-
-mean(limerick_property_df$year[limerick_property_df$price < 200000])
+condition <- limerick_property_df$price < 200000
+mean(limerick_property_df$year[condition])
 ```
 
 We can combine multiple Boolean expressions using the operator `&` for 'and', for instance `limerick_property_df$price < 200000 & limerick_property_df$year == 2020` is only true if the price is lower than 200k and the year is 2020. The operator `|` stands for 'or. For instance `limerick_property_df$price < 200000 | limerick_property_df$year == 2020` is true if the price is lower than 200k or the year is 2020.
@@ -218,7 +218,9 @@ mean(limerick_property_df$price[???])
 ```
 
 ```{r eitherPrices-solution}
-
-mean(limerick_property_df$price[limerick_property_df$price < 150000 | limerick_property_df$price > 300000])
+condition1 <- limerick_property_df$price < 150000 
+condition2 <- limerick_property_df$price > 300000
+condition_overall <- condition1 | condition2
+mean(limerick_property_df$price[condition_overall])
 ```
 
