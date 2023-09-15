@@ -6,6 +6,7 @@ runtime: shiny_prerendered
 
 ```{r setup, include=FALSE}
 library(learnr)
+library(quantsUL)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
@@ -14,7 +15,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Vectors
 
-*In the last tutorial, we encountered types of data: numbers (1,6, ...) and character strings ('blue', 'five', '5', 'fdbv 47.. df', ...). We organised them into vectors, that is a collection of elements with an order such that we can access for instance the third element of the vector.*
+*In the last tutorial, we encountered types of data: numbers (1,6, ...) and character strings ('blue', 'five', '5', 'fdbv 47.. df', ...). We organised multiple elements into vectors, that is a collection of elements with an order such that we can access for instance the third element of the vector.*
 
 Below are two vectors, a numeric and  a character vector (the latter indicated by `'` or `"`). If you are not sure what type an R object is, you can type `class()`. In the box below, determine the type of each vector.
 
@@ -64,7 +65,7 @@ numeric_vector_2
 c(numeric_vector, character_vector)
 ```
 
-In the last line, we combined our character and numeric vector. R then automatically converted all numeric elements to character strings. The reason is that vectors can only contain one type of data. While numbers can be converted to character, the reverse is not always possible. 
+In the last line, we combined our character and numeric vector. R then automatically converted all numeric elements to character strings. The reason is that vectors can only contain one type of data. While numbers can be converted to character, the reverse is impossible usually. 
 
 (This holds true outside of R, for instance 5 can be the name of a room. Importantly, room 5 plus room 3 does not equal room 8. While this seems clear, it is still an often made mistake in statistics: Not everything that has a number should be treated as a number.)
 
