@@ -1,5 +1,5 @@
 ---
-title: "Tutorial 2: Organise and manipulate data"
+title: "Tutorial 2: Data structures and types"
 output: learnr::tutorial
 runtime: shiny_prerendered
 ---
@@ -89,12 +89,136 @@ age_height_df <- data.frame(name, age, height)
 age_height_df
 ```
 
-This brings us to a first look at the data we will use for our term project. I have added a subset of the Irish property data to this tutorial as a `data.frame`. The `data.frame` is called `irish_property_df`. Have a look at the data in the next box. (Click on the triangle on the right to see more variables)  
+This brings us to a first look at the data we will use for our term project. I have added a cleaned up subset of the Irish property data to this tutorial as a `data.frame`. The `data.frame` is called `limerick_property_df`. 
+
+The `data.frame` consists of three vectors/variables: year, address, and price. Output the names of the variables in the box below using the function `names()`: `names(limerick_property_df)`.
+
+Then have a look at the whole data by typing the name `limerick_property_df`. (Click on the triangle on the right if you cannot see the price.) 
 
 ```{r prop-data, exercise=TRUE}
 
-irish_property_df
+
 ```
 
-## Objects, vectors, ...
+If we want to calculate the mean price, we have to access the vector `price`. One way to do this is the the dollar sign `$` after the name of the `data.frame`. The next box outputs the prices in this way. Change the code to calculate the mean of the vector using the function `mean()`.
+
+```{r price, exercise=TRUE, eval=TRUE}
+limerick_property_df$price
+
+```
+
+```{r price-solution}
+mean_price <- mean(limerick_property_df$price)
+mean_price
+```
+
+A second way to access one or multiple vectors in a `data.frame` is the `[]` notation used before for vectors. Since a `data.frame` has two dimensions (rows and columns), we can subset the `data.frame` in both dimensions: `[row,column]`. For instance, `limerick_property_df[1,2]` gives us the first row of the second column. `limerick_property_df[c(1,2,3,4),1]` gives us the first four rows of the first column. If we leave one dimension empty, all elements are outputed, for instance `limerick_property_df[c(1,2),]` for the first two rows and `limerick_property_df[,3]` for the third column.
+
+Complete the code below to output the first two addresses.
+
+```{r subset, exercise=TRUE}
+limerick_property_df[]
+
+```
+
+Since our columns have names as we have seen above, we can also access columns by name, for instance `limerick_property_df[,'address']` or `limerick_property_df[c(1,2,3), 'price']`. 
+
+Since we often want to access multiple rows, R has a few shortcuts. `a:b` gives us a vector of numbers from a to b, for instance `1:5` is the same as `c(1,2,3,4,5)`. Save the first ten prices in the box below as an object with the name `first_prices`. Then calculate the mean of these prices.
+
+```{r subset2, exercise=TRUE}
+limerick_property_df[]
+
+```
+
+```{r subset2-solution}
+first_prices <- limerick_property_df[1:10, 'price']
+mean(first_prices)
+
+```
+
+## Logical constants & Boolean expressions
+
+Our property `data.frame` contains observations from multiple years. Use the function `table()` to see how many observations per year.
+
+```{r obs-year, exercise=TRUE}
+
+
+```
+
+```{r obs-year-solution}
+table(limerick_property_df$year)
+
+```
+
+We now want to create a subset of our data that only contains observations from 2020. It is not practicable to just use row numbers for this operation. Instead, we want to use a so called Boolean expression that is a function that outputs `TRUE` when an observation is from 2020 and `FALSE` if not. That is the function creates a vector of the same length as the vector of years in our table that contains only `TRUE` or `FALSE`. These values are a third data type in R the so called logical constants.
+
+In the box below create a Boolean expression that outputs true for all years that are equal to 2020. For this you can use two notations: 1. A double equal sign `limerick_property_df$year == 2020` or 2. the word 'in' with percentage signs `limerick_property_df$year %in% 2020`. The second notation is more flexible as we can compare our vector of years with another vector instead of just a number, for instance `limerick_property_df$year %in% c(2019,2020)`.
+
+```{r true-year, exercise=TRUE}
+
+
+```
+
+```{r true-year-solution}
+true_2020 <- limerick_property_df$year %in% 2020
+true_2020
+```
+
+
+Boolean expressions play a huge role in data work as we will often manipulate or subset data on a condition. The box below illustrates the principle. We have a vector c('apple', 'pear', 'orange') that we want to subset with a `TRUE`/`FALSE` vector. First direct and then with a Boolean expression. Complete the last box with a Boolean expression that is equivalent to the line above.
+
+```{r true-fruit, exercise=TRUE}
+fruits <- c('apple', 'pear', 'orange')
+
+fruits[c(TRUE, FALSE, TRUE)]
+fruits[]
+
+```
+
+```{r true-fruit-solution}
+fruits[fruits %in% c('apple', 'orange')]
+
+```
+
+If you want to inverse a true/false vector you simply place an exclamation mark directly in front: `!vector`. For instance, `!c(TRUE, FALSE, TRUE)` or `!fruits %in% c('apple', 'orange')`.
+
+Let us apply these principles now on the house price data. Create a subset of the `data.frame` that does not contain any observations/rows from 2020 using a Boolean expression. 
+
+```{r subset2020, exercise=TRUE}
+not2020 <- limerick_property_df[,]
+not2020
+```
+
+```{r subset2020-solution}
+not2020 <- limerick_property_df[!limerick_property_df %in% 2020,] # or limerick_property_df %in% c(2018, 2019, 2021, 2022)
+not2020
+```
+
+Besides the equality, there are three more operators: 1. `!=` (does not equal), 2. `>` (larger than) and 3. `<` (smaller than).
+
+In the box below calculate the mean year of all prices lower than 200,000 by replacing the question marks in the code.
+
+```{r smallPrices, exercise=TRUE}
+mean(limerick_property_df$year[limerick_property_df$price ???])
+
+```
+
+```{r smallPrices-solution}
+
+mean(limerick_property_df$year[limerick_property_df$price < 200000])
+```
+
+We can combine multiple Boolean expressions using the operator `&` for 'and', for instance `limerick_property_df$price < 200000 & limerick_property_df$year == 2020` is only true if the price is lower than 200k and the year is 2020. The operator `|` stands for 'or. For instance `limerick_property_df$price < 200000 | limerick_property_df$year == 2020` is true if the price is lower than 200k or the year is 2020.
+
+In the box below, calculate the mean price for all properties that cost either more than 300,000 or less than 150,000
+
+```{r eitherPrices, exercise=TRUE}
+mean(limerick_property_df$price[???])
+
+```
+
+```{r eitherPrices-solution}
+
+mean(limerick_property_df$price[limerick_property_df$price < 150000 | limerick_property_df$price > 300000])
+```
 
