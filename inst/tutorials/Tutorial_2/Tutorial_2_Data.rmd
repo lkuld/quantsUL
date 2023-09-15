@@ -152,7 +152,28 @@ table(limerick_property_df$year)
 
 We now want to create a subset of our data that only contains observations from 2020. It is not practicable to just use row numbers for this operation. Instead, we want to use a so called Boolean expression that is a function that outputs `TRUE` when an observation is from 2020 and `FALSE` if not. That is the function creates a vector of the same length as the vector of years in our table that contains only `TRUE` or `FALSE`. These values are a third data type in R the so called logical constants.
 
-In the box below create a Boolean expression that outputs true for all years that are equal to 2020. For this you can use two notations: 1. A double equal sign `limerick_property_df$year == 2020` or 2. the word 'in' with percentage signs `limerick_property_df$year %in% 2020`. The second notation is more flexible as we can compare our vector of years with another vector instead of just a number, for instance `limerick_property_df$year %in% c(2019,2020)`.
+Boolean expressions play a huge role in data work as we will often manipulate or subset data on a condition. The box below illustrates the principle. We have a vector c('apple', 'pear', 'orange') that we want to subset with a `TRUE`/`FALSE` vector. At first directly and then with a Boolean expression. 
+
+You can use two notations: 1. A double equal sign `fruits == apple` or 2. the word 'in' with percentage signs `fruits %in% apple`. The second notation is more flexible as we can compare our vector of fruits with another vector instead of just a single element, for instance `fruits %in% c('apple', 'orange', 'strawberry')`.
+
+Complete the box below with a Boolean expression that is equivalent to the direct way.
+
+```{r true-fruit, exercise=TRUE}
+fruits <- c('apple', 'pear', 'orange')
+
+fruits[c(TRUE, FALSE, FALSE)]
+fruits[]
+
+```
+
+```{r true-fruit-solution}
+fruits[fruits %in% 'apple']
+
+```
+
+If you want to inverse a true/false vector you simply place an exclamation mark directly in front: `!vector`. For instance, `!c(TRUE, FALSE, FALSE)` or `!fruits %in% c('apple')`.
+
+Let us apply these principles now on the house price data. In the box below create a Boolean expression that outputs true for all years that are equal to 2020. 
 
 ```{r true-year, exercise=TRUE}
 
@@ -160,29 +181,13 @@ In the box below create a Boolean expression that outputs true for all years tha
 ```
 
 ```{r true-year-solution}
-true_2020 <- limerick_property_df$year %in% 2020
+true_2020 <- limerick_property_df$year %in% 2020 # or limerick_property_df$year == 2020
 true_2020
 ```
 
+We could use this vector to subset our data to contain observations from 2020 only (note the comma after the expression, we want to subset rows here): `data2020 <- limerick_property_df[limerick_property_df$year %in% 2020,]`.
 
-Boolean expressions play a huge role in data work as we will often manipulate or subset data on a condition. The box below illustrates the principle. We have a vector c('apple', 'pear', 'orange') that we want to subset with a `TRUE`/`FALSE` vector. First direct and then with a Boolean expression. Complete the last box with a Boolean expression that is equivalent to the line above.
-
-```{r true-fruit, exercise=TRUE}
-fruits <- c('apple', 'pear', 'orange')
-
-fruits[c(TRUE, FALSE, TRUE)]
-fruits[]
-
-```
-
-```{r true-fruit-solution}
-fruits[fruits %in% c('apple', 'orange')]
-
-```
-
-If you want to inverse a true/false vector you simply place an exclamation mark directly in front: `!vector`. For instance, `!c(TRUE, FALSE, TRUE)` or `!fruits %in% c('apple', 'orange')`.
-
-Let us apply these principles now on the house price data. Create a subset of the `data.frame` that does not contain any observations/rows from 2020 using a Boolean expression. 
+Below, create a subset of `limerick_property_df` that does not contain any observations/rows from 2020 using a Boolean expression. Have a look a few lines above to remember how to negate an expression. 
 
 ```{r subset2020, exercise=TRUE}
 not2020 <- limerick_property_df[,]
@@ -190,16 +195,20 @@ not2020
 ```
 
 ```{r subset2020-solution}
-not2020 <- limerick_property_df[!limerick_property_df %in% 2020,] # or limerick_property_df %in% c(2018, 2019, 2021, 2022)
+condition <- !limerick_property_df$year %in% 2020
+not2020 <- limerick_property_df[condition,] # or limerick_property_df %in% c(2018, 2019, 2021, 2022)
 not2020
 ```
 
-Besides the equality, there are three more operators: 1. `!=` (does not equal), 2. `>` (larger than) and 3. `<` (smaller than).
+Your code is often easier to read if you first define the condition and don't write the equation/function directly into the square brackets.
+
+Besides equality (`==`), there are three more operators: 1. `!=` (does not equal), 2. `>` (larger than) and 3. `<` (smaller than).
 
 In the box below calculate the mean year of all prices lower than 200,000 by replacing the question marks in the code.
 
 ```{r smallPrices, exercise=TRUE}
-mean(limerick_property_df$year[limerick_property_df$price ???])
+condition <- limerick_property_df$price ???
+mean(limerick_property_df$year[condition])
 
 ```
 
@@ -210,10 +219,13 @@ mean(limerick_property_df$year[condition])
 
 We can combine multiple Boolean expressions using the operator `&` for 'and', for instance `limerick_property_df$price < 200000 & limerick_property_df$year == 2020` is only true if the price is lower than 200k and the year is 2020. The operator `|` stands for 'or. For instance `limerick_property_df$price < 200000 | limerick_property_df$year == 2020` is true if the price is lower than 200k or the year is 2020.
 
-In the box below, calculate the mean price for all properties that cost either more than 300,000 or less than 150,000
+In the box below, calculate the mean price for all properties that cost either more than 300,000 or less than 150,000. Replace all questions marks.
 
 ```{r eitherPrices, exercise=TRUE}
-mean(limerick_property_df$price[???])
+condition1 <- ???
+condition2 <- ???
+condition_overall <- condition1 ??? condition2
+mean(limerick_property_df$price[condition_overall])
 
 ```
 
@@ -222,5 +234,6 @@ condition1 <- limerick_property_df$price < 150000
 condition2 <- limerick_property_df$price > 300000
 condition_overall <- condition1 | condition2
 mean(limerick_property_df$price[condition_overall])
+
 ```
 

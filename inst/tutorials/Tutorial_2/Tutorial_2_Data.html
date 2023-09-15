@@ -295,14 +295,40 @@ function creates a vector of the same length as the vector of years in
 our table that contains only <code>TRUE</code> or <code>FALSE</code>.
 These values are a third data type in R the so called logical
 constants.</p>
-<p>In the box below create a Boolean expression that outputs true for
-all years that are equal to 2020. For this you can use two notations: 1.
-A double equal sign <code>limerick_property_df$year == 2020</code> or 2.
-the word ‘in’ with percentage signs
-<code>limerick_property_df$year %in% 2020</code>. The second notation is
-more flexible as we can compare our vector of years with another vector
-instead of just a number, for instance
-<code>limerick_property_df$year %in% c(2019,2020)</code>.</p>
+<p>Boolean expressions play a huge role in data work as we will often
+manipulate or subset data on a condition. The box below illustrates the
+principle. We have a vector c(‘apple’, ‘pear’, ‘orange’) that we want to
+subset with a <code>TRUE</code>/<code>FALSE</code> vector. At first
+directly and then with a Boolean expression.</p>
+<p>You can use two notations: 1. A double equal sign
+<code>fruits == apple</code> or 2. the word ‘in’ with percentage signs
+<code>fruits %in% apple</code>. The second notation is more flexible as
+we can compare our vector of fruits with another vector instead of just
+a single element, for instance
+<code>fruits %in% c('apple', 'orange', 'strawberry')</code>.</p>
+<p>Complete the box below with a Boolean expression that is equivalent
+to the direct way.</p>
+<div class="tutorial-exercise" data-label="true-fruit"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
+<pre class="text"><code>fruits &lt;- c(&#39;apple&#39;, &#39;pear&#39;, &#39;orange&#39;)
+
+fruits[c(TRUE, FALSE, FALSE)]
+fruits[]</code></pre>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+</div>
+<div class="tutorial-exercise-support" data-label="true-fruit-solution"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0">
+<pre class="text"><code>fruits[fruits %in% &#39;apple&#39;]</code></pre>
+</div>
+<p>If you want to inverse a true/false vector you simply place an
+exclamation mark directly in front: <code>!vector</code>. For instance,
+<code>!c(TRUE, FALSE, FALSE)</code> or
+<code>!fruits %in% c('apple')</code>.</p>
+<p>Let us apply these principles now on the house price data. In the box
+below create a Boolean expression that outputs true for all years that
+are equal to 2020.</p>
 <div class="tutorial-exercise" data-label="true-year"
 data-completion="1" data-diagnostics="1" data-startover="1"
 data-lines="0">
@@ -311,36 +337,17 @@ data-lines="0">
 <div class="tutorial-exercise-support" data-label="true-year-solution"
 data-completion="1" data-diagnostics="1" data-startover="1"
 data-lines="0">
-<pre class="text"><code>true_2020 &lt;- limerick_property_df$year %in% 2020
+<pre class="text"><code>true_2020 &lt;- limerick_property_df$year %in% 2020 # or limerick_property_df$year == 2020
 true_2020</code></pre>
 </div>
-<p>Boolean expressions play a huge role in data work as we will often
-manipulate or subset data on a condition. The box below illustrates the
-principle. We have a vector c(‘apple’, ‘pear’, ‘orange’) that we want to
-subset with a <code>TRUE</code>/<code>FALSE</code> vector. First direct
-and then with a Boolean expression. Complete the last box with a Boolean
-expression that is equivalent to the line above.</p>
-<div class="tutorial-exercise" data-label="true-fruit"
-data-completion="1" data-diagnostics="1" data-startover="1"
-data-lines="0">
-<pre class="text"><code>fruits &lt;- c(&#39;apple&#39;, &#39;pear&#39;, &#39;orange&#39;)
-
-fruits[c(TRUE, FALSE, TRUE)]
-fruits[]</code></pre>
-<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
-</div>
-<div class="tutorial-exercise-support" data-label="true-fruit-solution"
-data-completion="1" data-diagnostics="1" data-startover="1"
-data-lines="0">
-<pre class="text"><code>fruits[fruits %in% c(&#39;apple&#39;, &#39;orange&#39;)]</code></pre>
-</div>
-<p>If you want to inverse a true/false vector you simply place an
-exclamation mark directly in front: <code>!vector</code>. For instance,
-<code>!c(TRUE, FALSE, TRUE)</code> or
-<code>!fruits %in% c('apple', 'orange')</code>.</p>
-<p>Let us apply these principles now on the house price data. Create a
-subset of the <code>data.frame</code> that does not contain any
-observations/rows from 2020 using a Boolean expression.</p>
+<p>We could use this vector to subset our data to contain observations
+from 2020 only (note the comma after the expression, we want to subset
+rows here):
+<code>data2020 &lt;- limerick_property_df[limerick_property_df$year %in% 2020,]</code>.</p>
+<p>Below, create a subset of <code>limerick_property_df</code> that does
+not contain any observations/rows from 2020 using a Boolean expression.
+Have a look a few lines above to remember how to negate an
+expression.</p>
 <div class="tutorial-exercise" data-label="subset2020"
 data-completion="1" data-diagnostics="1" data-startover="1"
 data-lines="0">
@@ -351,18 +358,23 @@ not2020</code></pre>
 <div class="tutorial-exercise-support" data-label="subset2020-solution"
 data-completion="1" data-diagnostics="1" data-startover="1"
 data-lines="0">
-<pre class="text"><code>not2020 &lt;- limerick_property_df[!limerick_property_df %in% 2020,] # or limerick_property_df %in% c(2018, 2019, 2021, 2022)
+<pre class="text"><code>condition &lt;- !limerick_property_df$year %in% 2020
+not2020 &lt;- limerick_property_df[condition,] # or limerick_property_df %in% c(2018, 2019, 2021, 2022)
 not2020</code></pre>
 </div>
-<p>Besides the equality, there are three more operators: 1.
-<code>!=</code> (does not equal), 2. <code>&gt;</code> (larger than) and
-3. <code>&lt;</code> (smaller than).</p>
+<p>Your code is often easier to read if you first define the condition
+and don’t write the equation/function directly into the square
+brackets.</p>
+<p>Besides equality (<code>==</code>), there are three more operators:
+1. <code>!=</code> (does not equal), 2. <code>&gt;</code> (larger than)
+and 3. <code>&lt;</code> (smaller than).</p>
 <p>In the box below calculate the mean year of all prices lower than
 200,000 by replacing the question marks in the code.</p>
 <div class="tutorial-exercise" data-label="smallPrices"
 data-completion="1" data-diagnostics="1" data-startover="1"
 data-lines="0">
-<pre class="text"><code>mean(limerick_property_df$year[limerick_property_df$price ???])</code></pre>
+<pre class="text"><code>condition &lt;- limerick_property_df$price ???
+mean(limerick_property_df$year[condition])</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
 <div class="tutorial-exercise-support" data-label="smallPrices-solution"
@@ -379,11 +391,15 @@ operator <code>|</code> stands for ’or. For instance
 <code>limerick_property_df$price &lt; 200000 | limerick_property_df$year == 2020</code>
 is true if the price is lower than 200k or the year is 2020.</p>
 <p>In the box below, calculate the mean price for all properties that
-cost either more than 300,000 or less than 150,000</p>
+cost either more than 300,000 or less than 150,000. Replace all
+questions marks.</p>
 <div class="tutorial-exercise" data-label="eitherPrices"
 data-completion="1" data-diagnostics="1" data-startover="1"
 data-lines="0">
-<pre class="text"><code>mean(limerick_property_df$price[???])</code></pre>
+<pre class="text"><code>condition1 &lt;- ???
+condition2 &lt;- ???
+condition_overall &lt;- condition1 ??? condition2
+mean(limerick_property_df$price[condition_overall])</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
 <div class="tutorial-exercise-support"
@@ -787,6 +803,48 @@ learnr:::store_exercise_cache(structure(list(label = "obs-year", global_setup = 
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-true-fruit-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-true-fruit-code-editor`)), session)
+output$`tutorial-exercise-true-fruit-output` <- renderUI({
+  `tutorial-exercise-true-fruit-result`()
+})
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::store_exercise_cache(structure(list(label = "true-fruit", global_setup = structure(c("library(learnr)", 
+"library(quantsUL)", "knitr::opts_chunk$set(echo = FALSE)"), chunk_opts = list(
+    label = "setup", include = FALSE)), setup = NULL, chunks = list(
+    list(label = "true-fruit", code = "fruits <- c('apple', 'pear', 'orange')\n\nfruits[c(TRUE, FALSE, FALSE)]\nfruits[]\n", 
+        opts = list(label = "\"true-fruit\"", exercise = "TRUE"), 
+        engine = "r")), code_check = NULL, error_check = NULL, 
+    check = NULL, solution = structure(c("fruits[fruits %in% 'apple']", 
+    ""), chunk_opts = list(label = "true-fruit-solution")), tests = NULL, 
+    options = list(eval = FALSE, echo = TRUE, results = "markup", 
+        tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
+        comment = NA, highlight = FALSE, size = "normalsize", 
+        background = "#F7F7F7", strip.white = TRUE, cache = 0, 
+        cache.path = "Tutorial_2_Data_cache/html/", cache.vars = NULL, 
+        cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
+        cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
+        fig.align = "default", fig.path = "Tutorial_2_Data_files/figure-html/", 
+        dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
+        fig.width = 6.5, fig.height = 4, fig.env = "figure", 
+        fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
+        fig.pos = "", out.width = 624, out.height = NULL, out.extra = NULL, 
+        fig.retina = 2, external = TRUE, sanitize = FALSE, interval = 1, 
+        aniopts = "controls,loop", warning = TRUE, error = FALSE, 
+        message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
+        engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
+        max.print = 1000, label = "true-fruit", exercise = TRUE, 
+        code = c("fruits <- c('apple', 'pear', 'orange')", "", 
+        "fruits[c(TRUE, FALSE, FALSE)]", "fruits[]", ""), out.width.px = 624, 
+        out.height.px = 384, params.src = "true-fruit, exercise=TRUE", 
+        fig.num = 0, exercise.df_print = "paged", exercise.checker = "NULL"), 
+    engine = "r", version = "4"), class = c("r", "tutorial_exercise"
+)))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
 `tutorial-exercise-true-year-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-true-year-code-editor`)), session)
 output$`tutorial-exercise-true-year-output` <- renderUI({
   `tutorial-exercise-true-year-result`()
@@ -800,7 +858,7 @@ learnr:::store_exercise_cache(structure(list(label = "true-year", global_setup =
     label = "setup", include = FALSE)), setup = NULL, chunks = list(
     list(label = "true-year", code = "\n", opts = list(label = "\"true-year\"", 
         exercise = "TRUE"), engine = "r")), code_check = NULL, 
-    error_check = NULL, check = NULL, solution = structure(c("true_2020 <- limerick_property_df$year %in% 2020", 
+    error_check = NULL, check = NULL, solution = structure(c("true_2020 <- limerick_property_df$year %in% 2020 # or limerick_property_df$year == 2020", 
     "true_2020"), chunk_opts = list(label = "true-year-solution")), 
     tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
@@ -827,48 +885,6 @@ learnr:::store_exercise_cache(structure(list(label = "true-year", global_setup =
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
-`tutorial-exercise-true-fruit-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-true-fruit-code-editor`)), session)
-output$`tutorial-exercise-true-fruit-output` <- renderUI({
-  `tutorial-exercise-true-fruit-result`()
-})
-</script>
-
-
-<script type="application/shiny-prerendered" data-context="server">
-learnr:::store_exercise_cache(structure(list(label = "true-fruit", global_setup = structure(c("library(learnr)", 
-"library(quantsUL)", "knitr::opts_chunk$set(echo = FALSE)"), chunk_opts = list(
-    label = "setup", include = FALSE)), setup = NULL, chunks = list(
-    list(label = "true-fruit", code = "fruits <- c('apple', 'pear', 'orange')\n\nfruits[c(TRUE, FALSE, TRUE)]\nfruits[]\n", 
-        opts = list(label = "\"true-fruit\"", exercise = "TRUE"), 
-        engine = "r")), code_check = NULL, error_check = NULL, 
-    check = NULL, solution = structure(c("fruits[fruits %in% c('apple', 'orange')]", 
-    ""), chunk_opts = list(label = "true-fruit-solution")), tests = NULL, 
-    options = list(eval = FALSE, echo = TRUE, results = "markup", 
-        tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
-        comment = NA, highlight = FALSE, size = "normalsize", 
-        background = "#F7F7F7", strip.white = TRUE, cache = 0, 
-        cache.path = "Tutorial_2_Data_cache/html/", cache.vars = NULL, 
-        cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
-        cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
-        fig.align = "default", fig.path = "Tutorial_2_Data_files/figure-html/", 
-        dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
-        fig.width = 6.5, fig.height = 4, fig.env = "figure", 
-        fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
-        fig.pos = "", out.width = 624, out.height = NULL, out.extra = NULL, 
-        fig.retina = 2, external = TRUE, sanitize = FALSE, interval = 1, 
-        aniopts = "controls,loop", warning = TRUE, error = FALSE, 
-        message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
-        engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
-        max.print = 1000, label = "true-fruit", exercise = TRUE, 
-        code = c("fruits <- c('apple', 'pear', 'orange')", "", 
-        "fruits[c(TRUE, FALSE, TRUE)]", "fruits[]", ""), out.width.px = 624, 
-        out.height.px = 384, params.src = "true-fruit, exercise=TRUE", 
-        fig.num = 0, exercise.df_print = "paged", exercise.checker = "NULL"), 
-    engine = "r", version = "4"), class = c("r", "tutorial_exercise"
-)))
-</script>
- 
-<script type="application/shiny-prerendered" data-context="server">
 `tutorial-exercise-subset2020-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-subset2020-code-editor`)), session)
 output$`tutorial-exercise-subset2020-output` <- renderUI({
   `tutorial-exercise-subset2020-result`()
@@ -883,7 +899,8 @@ learnr:::store_exercise_cache(structure(list(label = "subset2020", global_setup 
     list(label = "subset2020", code = "not2020 <- limerick_property_df[,]\nnot2020", 
         opts = list(label = "\"subset2020\"", exercise = "TRUE"), 
         engine = "r")), code_check = NULL, error_check = NULL, 
-    check = NULL, solution = structure(c("not2020 <- limerick_property_df[!limerick_property_df %in% 2020,] # or limerick_property_df %in% c(2018, 2019, 2021, 2022)", 
+    check = NULL, solution = structure(c("condition <- !limerick_property_df$year %in% 2020", 
+    "not2020 <- limerick_property_df[condition,] # or limerick_property_df %in% c(2018, 2019, 2021, 2022)", 
     "not2020"), chunk_opts = list(label = "subset2020-solution")), 
     tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
@@ -921,7 +938,7 @@ output$`tutorial-exercise-smallPrices-output` <- renderUI({
 learnr:::store_exercise_cache(structure(list(label = "smallPrices", global_setup = structure(c("library(learnr)", 
 "library(quantsUL)", "knitr::opts_chunk$set(echo = FALSE)"), chunk_opts = list(
     label = "setup", include = FALSE)), setup = NULL, chunks = list(
-    list(label = "smallPrices", code = "mean(limerick_property_df$year[limerick_property_df$price ???])\n", 
+    list(label = "smallPrices", code = "condition <- limerick_property_df$price ???\nmean(limerick_property_df$year[condition])\n", 
         opts = list(label = "\"smallPrices\"", exercise = "TRUE"), 
         engine = "r")), code_check = NULL, error_check = NULL, 
     check = NULL, solution = structure(c("condition <- limerick_property_df$price < 200000", 
@@ -943,8 +960,9 @@ learnr:::store_exercise_cache(structure(list(label = "smallPrices", global_setup
         message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
         engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
         max.print = 1000, label = "smallPrices", exercise = TRUE, 
-        code = c("mean(limerick_property_df$year[limerick_property_df$price ???])", 
-        ""), out.width.px = 624, out.height.px = 384, params.src = "smallPrices, exercise=TRUE", 
+        code = c("condition <- limerick_property_df$price ???", 
+        "mean(limerick_property_df$year[condition])", ""), out.width.px = 624, 
+        out.height.px = 384, params.src = "smallPrices, exercise=TRUE", 
         fig.num = 0, exercise.df_print = "paged", exercise.checker = "NULL"), 
     engine = "r", version = "4"), class = c("r", "tutorial_exercise"
 )))
@@ -962,20 +980,21 @@ output$`tutorial-exercise-eitherPrices-output` <- renderUI({
 learnr:::store_exercise_cache(structure(list(label = "eitherPrices", global_setup = structure(c("library(learnr)", 
 "library(quantsUL)", "knitr::opts_chunk$set(echo = FALSE)"), chunk_opts = list(
     label = "setup", include = FALSE)), setup = NULL, chunks = list(
-    list(label = "eitherPrices", code = "mean(limerick_property_df$price[???])\n", 
+    list(label = "eitherPrices", code = "condition1 <- ???\ncondition2 <- ???\ncondition_overall <- condition1 ??? condition2\nmean(limerick_property_df$price[condition_overall])\n", 
         opts = list(label = "\"eitherPrices\"", exercise = "TRUE"), 
         engine = "r")), code_check = NULL, error_check = NULL, 
     check = NULL, solution = structure(c("condition1 <- limerick_property_df$price < 150000 ", 
     "condition2 <- limerick_property_df$price > 300000", "condition_overall <- condition1 | condition2", 
-    "mean(limerick_property_df$price[condition_overall])"), chunk_opts = list(
-        label = "eitherPrices-solution")), tests = NULL, options = list(
-        eval = FALSE, echo = TRUE, results = "markup", tidy = FALSE, 
-        tidy.opts = NULL, collapse = FALSE, prompt = FALSE, comment = NA, 
-        highlight = FALSE, size = "normalsize", background = "#F7F7F7", 
-        strip.white = TRUE, cache = 0, cache.path = "Tutorial_2_Data_cache/html/", 
-        cache.vars = NULL, cache.lazy = TRUE, dependson = NULL, 
-        autodep = FALSE, cache.rebuild = FALSE, fig.keep = "high", 
-        fig.show = "asis", fig.align = "default", fig.path = "Tutorial_2_Data_files/figure-html/", 
+    "mean(limerick_property_df$price[condition_overall])", ""
+    ), chunk_opts = list(label = "eitherPrices-solution")), tests = NULL, 
+    options = list(eval = FALSE, echo = TRUE, results = "markup", 
+        tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
+        comment = NA, highlight = FALSE, size = "normalsize", 
+        background = "#F7F7F7", strip.white = TRUE, cache = 0, 
+        cache.path = "Tutorial_2_Data_cache/html/", cache.vars = NULL, 
+        cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
+        cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
+        fig.align = "default", fig.path = "Tutorial_2_Data_files/figure-html/", 
         dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
         fig.width = 6.5, fig.height = 4, fig.env = "figure", 
         fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
@@ -985,8 +1004,9 @@ learnr:::store_exercise_cache(structure(list(label = "eitherPrices", global_setu
         message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
         engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
         max.print = 1000, label = "eitherPrices", exercise = TRUE, 
-        code = c("mean(limerick_property_df$price[???])", ""), 
-        out.width.px = 624, out.height.px = 384, params.src = "eitherPrices, exercise=TRUE", 
+        code = c("condition1 <- ???", "condition2 <- ???", "condition_overall <- condition1 ??? condition2", 
+        "mean(limerick_property_df$price[condition_overall])", 
+        ""), out.width.px = 624, out.height.px = 384, params.src = "eitherPrices, exercise=TRUE", 
         fig.num = 0, exercise.df_print = "paged", exercise.checker = "NULL"), 
     engine = "r", version = "4"), class = c("r", "tutorial_exercise"
 )))
