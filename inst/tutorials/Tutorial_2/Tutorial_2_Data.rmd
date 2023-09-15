@@ -94,6 +94,7 @@ This brings us to a first look at the data we will use for our term project. I h
 ```{r prop-data, exercise=TRUE}
 
 irish_property_df
+Bairoch_1988
 ```
 
 ## Objects, vectors, ...
