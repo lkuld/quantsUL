@@ -89,12 +89,11 @@ age_height_df <- data.frame(name, age, height)
 age_height_df
 ```
 
-This brings us to a first look at the data we will use for our term project. I have added a subset of the Irish property data to this tutorial as a `data.frame`. The `data.frame` is called `irish_property_df`. Have a look at the data in the next box.  
+This brings us to a first look at the data we will use for our term project. I have added a subset of the Irish property data to this tutorial as a `data.frame`. The `data.frame` is called `irish_property_df`. Have a look at the data in the next box. (Click on the triangle on the right to see more variables)  
 
 ```{r prop-data, exercise=TRUE}
 
 irish_property_df
-Bairoch_1988
 ```
 
 ## Objects, vectors, ...
